@@ -2,7 +2,7 @@ import React from "react";
 import { Modal } from "antd";
 import { useModalContext } from "@/context/ModalContext";
 
-const ModalDetail = ({ title, modalId, children }) => {
+const ModalDetail = ({ title, modalId, children }: any) => {
   const { hideModal, modalState } = useModalContext();
   return (
     <Modal

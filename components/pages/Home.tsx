@@ -1,22 +1,12 @@
 "use client";
 import React, { useState, useContext } from "react";
 import dynamic from "next/dynamic";
-import {
-  Card,
-  Col,
-  Row,
-  Typography,
-  Tooltip,
-  Button,
-  Timeline,
-  Space,
-} from "antd";
+import { Card, Col, Row, Typography, Button, Timeline, Space } from "antd";
 import TableProfit from "@/components/TableProfit";
 import Link from "next/link";
 import { MainContext } from "@/context/MainContext";
-import { numberWithCommas, formatDefault, timeFormat } from "@/utils";
+import { numberWithCommas, formatDefault } from "@/utils";
 import dayjs from "dayjs";
-import { InfoCircleOutlined } from "@ant-design/icons";
 
 const Echart = dynamic(() => import("@/components/chart/EChart"), {
   ssr: false,
@@ -25,7 +15,7 @@ const LineChart = dynamic(() => import("@/components/chart/LineChart"), {
   ssr: false,
 });
 
-function Home({ profits }) {
+function Home({ profits = null }: any) {
   const { Title, Text, Paragraph } = Typography;
   const { user } = useContext(MainContext);
 
@@ -92,7 +82,7 @@ function Home({ profits }) {
   const timelineList = React.useMemo(
     () =>
       Boolean(profits?.data?.length)
-        ? profits.data.map((profit) => ({
+        ? profits.data.map((profit: any) => ({
             children: (
               <>
                 <Title level={5}>
@@ -121,38 +111,7 @@ function Home({ profits }) {
     [profits]
   );
 
-  const columns = [
-    {
-      title: "Thời gian",
-      dataIndex: "time",
-      key: "time",
-    },
-    {
-      title: (
-        <Space>
-          Lợi nhuận
-          <Tooltip title="Lợi nhuận tháng">
-            <InfoCircleOutlined />
-          </Tooltip>
-        </Space>
-      ),
-      dataIndex: "profit",
-      key: "profit",
-    },
-    {
-      title: (
-        <Space>
-          Tổng dư lãi
-          <Tooltip title="Lợi nhuận lợi nhuận dược tính dựa trên lợi nhuận các deal trước đó và deal hiện tại trong cùng một tháng">
-            <InfoCircleOutlined />
-          </Tooltip>
-        </Space>
-      ),
-      dataIndex: "profit_amount",
-      key: "profit_amonut",
-    },
-  ];
-
+  if (!profits) return null;
   return (
     <div>
       <Row className="rowgap-vbox" gutter={[24, 0]}>
@@ -186,7 +145,6 @@ function Home({ profits }) {
           </Col>
         ))}
       </Row>
-
       <Row gutter={[24, 0]}>
         <Col xs={24} sm={24} md={12} lg={12} xl={10} className="mb-24">
           <Card bordered={false} className="criclebox h-full">

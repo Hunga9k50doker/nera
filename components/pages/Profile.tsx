@@ -27,30 +27,20 @@ import ModalConfirm from "@/components/modal/ModalConfirm";
 import ModalInfo from "@/components/modal/ModalInfo";
 import { logoutAction, updatePasswordAcction } from "@/actions";
 import Privacy from "@/components/Privacy";
-function Profile({ bankAccount }) {
+function Profile({ bankAccount = null }: any) {
   const { Text } = Typography;
   const modalId = "modal-confirm";
   const modalIdLogout = "modal-logout";
   const modalIdPrivacy = "modal-privacy";
 
   const { user } = React.useContext(MainContext);
-  const [bankData, setBankData] = React.useState();
+  const [bankData, setBankData] = React.useState<any>();
   const [confirmLoading, setConfirmLoading] = React.useState(false);
   const { showModal, hideModal } = useModalContext();
-  const btnSubmitRef = React.useRef();
+  const btnSubmitRef = React.useRef<any>();
   const [form] = Form.useForm();
 
-  React.useEffect(() => {
-    if (bankAccount.status < 300) {
-      return setBankData(bankAccount.data);
-    } else {
-      return toast(bankAccount?.message, {
-        type: bankAccount?.type,
-      });
-    }
-  }, [bankAccount]);
-
-  const onLogout = async () => {
+  const onLogout = React.useCallback(async () => {
     setConfirmLoading(true);
     const data = await logoutAction();
     setConfirmLoading(false);
@@ -58,35 +48,44 @@ function Profile({ bankAccount }) {
     toast(data?.message, {
       type: data?.type,
     });
-  };
+  }, [confirmLoading]);
 
-  const onFinish = React.useCallback(
-    () => async (values) => {
-      setConfirmLoading(true);
-      const data = await updatePasswordAcction(values);
-      setConfirmLoading(false);
-      hideModal(modalId);
-      form.resetFields();
-      toast(data?.message, {
-        type: data?.type,
-      });
-      toast("Vui lòng đăng nhập lại", {
-        type: "success",
-      });
-      setTimeout(() => {
-        deleteCookie("access_token");
-        deleteCookie("refresh_token");
-        window.location.replace("/sign-in");
-      }, 1000);
-    },
-    [hideModal, modalId, form]
-  );
+  const onFinish = React.useCallback(async (values: any) => {
+    setConfirmLoading(true);
+    const data = await updatePasswordAcction(values);
+    setConfirmLoading(false);
+    hideModal(modalId);
+    form.resetFields();
+    toast(data?.message, {
+      type: data?.type,
+    });
+    toast("Vui lòng đăng nhập lại", {
+      type: "success",
+    });
+    setTimeout(() => {
+      deleteCookie("access_token");
+      deleteCookie("refresh_token");
+      window.location.replace("/sign-in");
+    }, 1000);
+  }, []);
 
-  const onFinishFailed = (errorInfo) => {};
+  const onFinishFailed = () => {};
 
   const handleCall = React.useCallback(() => {
     window.open(`tel:${user.pool.hotline}`);
   }, [user]);
+
+  React.useEffect(() => {
+    if (bankAccount) {
+      if (bankAccount?.status < 300) {
+        return setBankData(bankAccount.data);
+      } else {
+        toast(bankAccount?.message, {
+          type: bankAccount?.type,
+        });
+      }
+    }
+  }, [bankAccount]);
 
   return (
     <>
@@ -125,9 +124,9 @@ function Profile({ bankAccount }) {
               >
                 <Row gutter={[24, 24]}>
                   {bankData &&
-                    bankData.map((i, index) => (
+                    bankData.map((i: any, index: any) => (
                       <Col span={24} key={index}>
-                        <Card className="card-billing-info" bordered="false">
+                        <Card className="card-billing-info" bordered={false}>
                           <div className="col-info">
                             <Descriptions title={i.bank_name}>
                               <Descriptions.Item label="Tên tài khoản" span={3}>
@@ -163,7 +162,7 @@ function Profile({ bankAccount }) {
               </h6>,
             ]}
           >
-            <List itemLayout="vetical" className="invoice-list">
+            <List itemLayout="vertical" className="invoice-list">
               <List.Item>
                 <Button
                   onClick={() => showModal(modalId)}
@@ -215,7 +214,7 @@ function Profile({ bankAccount }) {
           confirmLoading={confirmLoading}
           modalId={modalId}
           title={"Thay đổi mã pin"}
-          callBack={() => btnSubmitRef.current.click()}
+          callBack={() => btnSubmitRef?.current?.click()}
           okText="Cập nhật"
         >
           <Form

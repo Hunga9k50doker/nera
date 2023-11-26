@@ -7,7 +7,7 @@ import Footer from "./Footer";
 import { usePathname } from "next/navigation";
 const { Header: AntHeader, Content, Sider } = Layout;
 
-function Main({ children }) {
+function Main({ children }: any) {
   const [visible, setVisible] = useState(false);
   const [placement, setPlacement] = useState("right");
   const [sidenavColor, setSidenavColor] = useState("#1890ff");
@@ -15,9 +15,9 @@ function Main({ children }) {
   const [fixed, setFixed] = useState(false);
 
   const openDrawer = () => setVisible(!visible);
-  const handleSidenavType = (type) => setSidenavType(type);
-  const handleSidenavColor = (color) => setSidenavColor(color);
-  const handleFixedNavbar = (type) => setFixed(type);
+  const handleSidenavType = (type: any) => setSidenavType(type);
+  const handleSidenavColor = (color: any) => setSidenavColor(color);
+  const handleFixedNavbar = (type: any) => setFixed(type);
 
   let pathname = usePathname();
   pathname = pathname.replace("/", "");

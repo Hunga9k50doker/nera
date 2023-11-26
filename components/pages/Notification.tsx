@@ -8,7 +8,11 @@ import { getNotificationDetailAction, getNotificationAction } from "@/actions";
 import { toast } from "react-toastify";
 import { useRouter } from "next/navigation";
 
-const Notification = ({ data, shortView = false, intialNew = null }) => {
+const Notification = ({
+  data = null,
+  shortView = false,
+  intialNew = null,
+}: any) => {
   const { updateNotification } = React.useContext(MainContext);
   const router = useRouter();
   const [pageData, setPageData] = React.useState(data?.data);
@@ -16,7 +20,7 @@ const Notification = ({ data, shortView = false, intialNew = null }) => {
   const [itemSelected, setItemSelected] = React.useState(intialNew?.data);
 
   const getNotification = React.useCallback(
-    async (page) => {
+    async (page: number) => {
       const data = await getNotificationAction({
         page: page,
       });
@@ -42,7 +46,7 @@ const Notification = ({ data, shortView = false, intialNew = null }) => {
     }
   }, [itemSelected]);
 
-  const onChange = React.useCallback((e) => {
+  const onChange = React.useCallback((e: any) => {
     getNotification(e);
   }, []);
 
@@ -79,7 +83,7 @@ const Notification = ({ data, shortView = false, intialNew = null }) => {
           <Row gutter={[24, 24]}>
             {newDetail && (
               <Col span={24}>
-                <Card className="card-billing-info" bordered="false">
+                <Card className="card-billing-info" bordered={false}>
                   <div className="col-info">
                     {ReactHtmlParser(newDetail.body)}
                   </div>
@@ -101,7 +105,7 @@ const Notification = ({ data, shortView = false, intialNew = null }) => {
               className="transactions-list ant-newest"
               itemLayout="horizontal"
               dataSource={pageData.data}
-              renderItem={(item) => (
+              renderItem={(item: any) => (
                 <List.Item
                   className="cursor-pointer"
                   style={{

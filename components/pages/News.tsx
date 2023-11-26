@@ -5,13 +5,13 @@ import dayjs from "dayjs";
 import ReactHtmlParser from "react-html-parser";
 import { getNewDetailAction, getNewsAction } from "@/actions";
 import { toast } from "react-toastify";
-function News({ data: news, intialNew }) {
+function News({ data: news = null, intialNew = null }: any) {
   const [pageData, setPageData] = React.useState(news?.data);
   const [newDetail, setNewDetail] = React.useState(intialNew?.data);
   const [itemSelected, setItemSelected] = React.useState(intialNew?.data);
 
   const getNews = React.useCallback(
-    async (page) => {
+    async (page: number) => {
       const data = await getNewsAction({
         page: page,
       });
@@ -26,7 +26,7 @@ function News({ data: news, intialNew }) {
     [pageData]
   );
 
-  const onChange = React.useCallback((e) => {
+  const onChange = React.useCallback((e: number) => {
     getNews(e);
   }, []);
 
@@ -62,7 +62,7 @@ function News({ data: news, intialNew }) {
             <Row gutter={[24, 24]}>
               {newDetail && (
                 <Col span={24}>
-                  <Card className="card-billing-info" bordered="false">
+                  <Card className="card-billing-info" bordered={false}>
                     <div className="col-info">
                       {ReactHtmlParser(newDetail.body)}
                     </div>
@@ -84,7 +84,7 @@ function News({ data: news, intialNew }) {
                 className="transactions-list ant-newest"
                 itemLayout="horizontal"
                 dataSource={pageData.data}
-                renderItem={(item) => (
+                renderItem={(item: any) => (
                   <List.Item
                     className="cursor-pointer"
                     onClick={() => setItemSelected(item)}

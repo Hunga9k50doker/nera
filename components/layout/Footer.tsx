@@ -15,6 +15,7 @@ function Footer() {
               href="https://github.com/Hunga9k50doker"
               className="font-weight-bold"
               target="_blank"
+              rel="noopener"
             >
               NguyenHung
             </a>

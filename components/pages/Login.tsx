@@ -5,17 +5,19 @@ import React from "react";
 import { toast } from "react-toastify";
 const Login = () => {
   const [confirmLoading, setConfirmLoading] = React.useState(false);
-  const onFinish = async (values) => {
+  const onFinish = async (values: any) => {
     setConfirmLoading(true);
     const res = await loginAction(values);
     setConfirmLoading(false);
     toast(res?.message, {
       type: res?.type || "success",
     });
-    window.location.reload("/");
+    setTimeout(() => {
+      window.location.replace("/");
+    }, 1000);
   };
 
-  const onFinishFailed = (errorInfo) => {};
+  const onFinishFailed = () => {};
   return (
     <Card
       className="max-w-[600px]"

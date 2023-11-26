@@ -6,7 +6,7 @@ import { usePathname } from "next/navigation";
 import React from "react";
 import { DownloadOutlined } from "@ant-design/icons";
 
-function Sidenav({ color }) {
+function Sidenav({ color }: any) {
   const pathname = usePathname();
   const page = pathname.replace("/", "");
 

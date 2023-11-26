@@ -8,7 +8,7 @@ const ModalConfirm = ({
   callBack,
   children,
   confirmLoading,
-}) => {
+}: any) => {
   const { hideModal, modalState } = useModalContext();
   return (
     <Modal

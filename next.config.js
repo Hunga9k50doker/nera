@@ -1,6 +1,8 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
   reactStrictMode: true,
+  distDir: "build",
+  trailingSlash: true,
   webpack: (config) => {
     config.resolve.fallback = { fs: false };
     config.module.rules.forEach((rule) => {

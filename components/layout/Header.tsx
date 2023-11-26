@@ -27,7 +27,7 @@ function Header({
   onPress,
   handleSidenavColor,
   handleSidenavType,
-}) {
+}: any) {
   const { useToken } = theme;
   const router = useRouter();
   const { token } = useToken();
@@ -38,19 +38,24 @@ function Header({
   const items = React.useMemo(
     () =>
       notification?.data
-        ? notification.data.map((item, i) => ({
+        ? notification.data.map((item: any, i: number) => ({
             label: (
-              <Flex
-                justify="space-between"
-                gap={24}
-                onClick={() => {
-                  router.push(`/notification/?id=${item.id}`);
-                  router.refresh();
-                }}
-              >
-                <Text strong>{item.title}</Text>
-                <Text>{getFromNowShort(item.created_at)}</Text>
-              </Flex>
+              <>
+                <Flex
+                  style={{ minWidth: 300 }}
+                  vertical
+                  justify="space-between"
+                  // gap={24}
+                  onClick={() => {
+                    router.push(`/notification/?id=${item.id}`);
+                    router.refresh();
+                  }}
+                >
+                  <Text strong>{item.title}</Text>
+                  <Text>{getFromNowShort(item.created_at)}</Text>
+                </Flex>
+                <Divider style={{ margin: 0 }} />
+              </>
             ),
             key: i,
           }))
@@ -62,7 +67,7 @@ function Header({
   const showDrawer = () => setVisible(true);
   const hideDrawer = () => setVisible(false);
 
-  const convertName = (name) => {
+  const convertName = (name: string) => {
     switch (name) {
       case "history":
         return "lịch sử";
@@ -111,7 +116,7 @@ function Header({
             <Dropdown
               menu={{ items }}
               trigger={["click"]}
-              dropdownRender={(menu) => (
+              dropdownRender={(menu: any) => (
                 <div style={contentStyle}>
                   {React.cloneElement(menu, {
                     style: {
@@ -166,7 +171,7 @@ function Header({
             placement={placement}
             open={visible}
           >
-            <Space direction="vertical" align="" className="justify-between">
+            <Space direction="vertical" className="justify-between">
               <div className="header-top">
                 <Title level={4}>
                   Cài đặt
@@ -184,31 +189,21 @@ function Header({
                     >
                       1
                     </Button>
-                    <Button
-                      type="success"
-                      onClick={() => handleSidenavColor("#52c41a")}
-                    >
+                    <Button onClick={() => handleSidenavColor("#52c41a")}>
                       1
                     </Button>
                     <Button
                       danger
                       className="bg-red"
-                      type="text"
                       onClick={() => handleSidenavColor("#d9363e")}
                     >
                       1
                     </Button>
-                    <Button
-                      type="yellow"
-                      onClick={() => handleSidenavColor("#fadb14")}
-                    >
+                    <Button onClick={() => handleSidenavColor("#fadb14")}>
                       1
                     </Button>
 
-                    <Button
-                      type="black"
-                      onClick={() => handleSidenavColor("#111")}
-                    >
+                    <Button onClick={() => handleSidenavColor("#111")}>
                       1
                     </Button>
                   </ButtonContainer>
@@ -218,7 +213,7 @@ function Header({
                   <Text>Cấu hình ui của sidebar.</Text>
                   <ButtonContainer className="trans">
                     <Button
-                      type={sidenavType === "transparent" ? "primary" : "white"}
+                      type={sidenavType === "transparent" ? "primary" : "text"}
                       onClick={() => {
                         handleSidenavType("transparent");
                         setSidenavType("transparent");
@@ -227,7 +222,7 @@ function Header({
                       Trong suốt
                     </Button>
                     <Button
-                      type={sidenavType === "white" ? "primary" : "white"}
+                      type={sidenavType === "white" ? "primary" : "text"}
                       onClick={() => {
                         handleSidenavType("#fff");
                         setSidenavType("white");

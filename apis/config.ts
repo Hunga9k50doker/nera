@@ -57,6 +57,10 @@ export default async function fetchAPI(
           type: "warning",
           status: response.status,
         };
+        // cookies().delete("access_token");
+        // cookies().delete("refresh_token");
+        // redirect("/sign-in");
+        //  return Promise.reject(message);
       } else if (response.status >= 500 && response.status <= 600) {
         message = {
           message: contentError(response.statusText),
@@ -70,7 +74,7 @@ export default async function fetchAPI(
           status: response.status,
         };
       }
-      return Promise.reject(message);
+      return Promise.reject(JSON.parse(JSON.stringify(message)));
     }
     const data = await response.json();
     if (data.status >= 300)

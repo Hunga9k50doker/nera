@@ -13,8 +13,8 @@ const Privacy = () => {
   const { showModal } = useModalContext();
   const [isLoadingDetail, setIsLoadingDetail] = React.useState(false);
   const [isLoading, setIsLoading] = React.useState(false);
-  const [itemSelected, setItemSelected] = React.useState();
-  const [itemDetail, setItemDetail] = React.useState();
+  const [itemSelected, setItemSelected] = React.useState<any>();
+  const [itemDetail, setItemDetail] = React.useState<any>();
   const [pageData, setPageData] = React.useState({
     data: [],
     total_records: 0,
@@ -51,7 +51,7 @@ const Privacy = () => {
     setIsLoadingDetail(false);
   }, [itemSelected]);
 
-  const onViewDetail = (item) => {
+  const onViewDetail = (item: any) => {
     setItemSelected(item);
     showModal(modalId);
   };
@@ -66,7 +66,7 @@ const Privacy = () => {
 
   const items = React.useMemo(
     () =>
-      pageData.data.map((item, key) => ({
+      pageData.data.map((item: any, key: number) => ({
         key: key,
         label: item.title,
         children: (

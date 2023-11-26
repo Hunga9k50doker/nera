@@ -39,11 +39,11 @@ const columns = [
   },
 ];
 
-function Tables({ profits }) {
+function Tables({ profits = null }: any) {
   const { showModal } = useModalContext();
   const [itemSelected, setItemSelected] = React.useState();
   const modalId = "modal-detail";
-  const onViewDetail = (data) => {
+  const onViewDetail = (data: any) => {
     setItemSelected(data);
     showModal(modalId);
   };
@@ -51,7 +51,7 @@ function Tables({ profits }) {
   const data = React.useMemo(
     () =>
       Boolean(profits?.data?.length)
-        ? profits.data.map((profit, key) => ({
+        ? profits.data.map((profit: any, key: any) => ({
             key: key,
             time: (
               <div className="semibold">

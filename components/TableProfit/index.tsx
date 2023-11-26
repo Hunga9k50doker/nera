@@ -6,9 +6,9 @@ import dayjs from "dayjs";
 import { InfoCircleOutlined } from "@ant-design/icons";
 import { getMonthlyProfitAction } from "@/actions";
 import { toast } from "react-toastify";
-function TableProfit({ profits, item }) {
+function TableProfit({ profits = null, item = null }) {
   const [isLoading, setIsLoading] = useState(true);
-  const [pageData, setpageData] = useState(profits);
+  const [pageData, setpageData] = useState<any>(profits);
   const time = React.useMemo(() => {
     if (item) {
       const date = new Date(item);
@@ -60,7 +60,7 @@ function TableProfit({ profits, item }) {
 
   const dataSource = React.useMemo(() => {
     return pageData
-      ? pageData.map((d, key) => ({
+      ? pageData.map((d: any, key: any) => ({
           key: key,
           time: timeFormat(d.created_at),
           profit: numberWithCommas(d.profit),

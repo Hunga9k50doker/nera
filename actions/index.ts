@@ -9,7 +9,6 @@ import {
   getNotifications,
 } from "@/apis/notification.api";
 import { changePassword, login, logout } from "@/apis/user.api";
-import { revalidatePath } from "next/cache";
 import { cookies } from "next/headers";
 
 export const loginAction = async (formdata: any) => {
