@@ -1,5 +1,5 @@
 import numeral from "numeral";
-import dayjs from "dayjs";
+import dayjs from "./dayjs";
 
 export const formatDefault = (amount: any) => {
   let textResult = ``;
@@ -41,4 +41,36 @@ export const isEmailValid = (email: string): boolean => {
   // Regular expression pattern for email validation
   const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
   return emailPattern.test(email);
+};
+
+export const getFromNowShort = (
+  datetimeStr: any,
+  showSuffix?: boolean,
+  exact?: boolean
+) => {
+  const strings = {
+    prefixAgo: "",
+    prefixFromNow: null,
+    suffixAgo: "",
+    suffixFromNow: "",
+    seconds: "mới đây",
+    minute: "1 phút",
+    minutes: "%d phút",
+    hour: "1 giờ",
+    hours: "%d giờ",
+    day: "1 ngày",
+    days: "%d ngày",
+    month: "1 tháng",
+    months: "%d tháng",
+    year: "1 năm",
+    years: "%d năm",
+    wordSeparator: " ",
+  };
+  if (showSuffix) {
+    strings.suffixAgo = "trước";
+    strings.suffixFromNow = "trước";
+  }
+  if (exact) return dayjs(datetimeStr).format("DD/MM/YYYY");
+  const timeAgo = dayjs(datetimeStr).fromNow();
+  return timeAgo;
 };

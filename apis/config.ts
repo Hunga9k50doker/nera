@@ -37,6 +37,7 @@ export default async function fetchAPI(
     //update token header when api private
     if (!listApiNoneToken.includes(url || "") && token)
       headers.append("Authorization", `Bearer ${token}`);
+    // console.log(fullUrl, url);
 
     const response = await fetch(fullUrl, {
       method: method,
@@ -48,7 +49,6 @@ export default async function fetchAPI(
       //@ts-ignore
       ...options,
     });
-    console.log(fullUrl);
 
     if (!response.ok) {
       if (response.status === 401 || response.status === 403) {

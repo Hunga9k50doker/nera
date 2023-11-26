@@ -22,24 +22,41 @@ const initState = {
   isAuth: false,
 };
 
+const initStateNoti = {
+  data: [],
+  page_index: 0,
+  total_page: 0,
+  total_records: 0,
+};
+
 interface MainProviderProps {
   user: any;
+  notification: any;
   updateUser: (user: any) => void;
+  updateNotification: (user: any) => void;
   resetUser: () => void;
 }
 
 export const MainContext = React.createContext<MainProviderProps>({
   user: initState,
+  notification: null,
   updateUser: () => {},
+  updateNotification: () => {},
   resetUser: () => {},
 });
 
 const MainProvider = ({ children }: { children: React.ReactNode }) => {
   let userData = initState;
+  let noficationData = initStateNoti;
   const [user, setUser] = React.useState(initState);
+  const [notification, setNotification] = React.useState(initStateNoti);
 
   const updateUser = (data: any) => {
     userData = { ...data?.data, isAuth: true };
+  };
+
+  const updateNotification = (data: any) => {
+    noficationData = data;
   };
 
   const resetUser = () => {
@@ -50,11 +67,17 @@ const MainProvider = ({ children }: { children: React.ReactNode }) => {
     setUser(userData);
   }, [userData]);
 
+  React.useEffect(() => {
+    setNotification(noficationData);
+  }, [noficationData]);
+
   return (
     <MainContext.Provider
       value={{
         user,
+        notification,
         updateUser,
+        updateNotification,
         resetUser,
       }}
     >

@@ -87,6 +87,10 @@ function TableProfit({ profits, item }) {
     if (item) getProfitMonth();
   }, [getProfitMonth, item]);
 
+  React.useEffect(() => {
+    if (profits) setpageData(profits);
+  }, [profits]);
+
   return (
     <Table
       style={{

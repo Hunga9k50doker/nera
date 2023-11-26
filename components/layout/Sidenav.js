@@ -1,9 +1,11 @@
-import { Menu, Divider, Space } from "antd";
+import { Menu, Divider, Space, Avatar, Button, Flex } from "antd";
 import Link from "next/link";
 import logo from "../../assets/images/logo.png";
 import Image from "next/image";
 import { usePathname } from "next/navigation";
 import React from "react";
+import { DownloadOutlined } from "@ant-design/icons";
+
 function Sidenav({ color }) {
   const pathname = usePathname();
   const page = pathname.replace("/", "");
@@ -93,105 +95,113 @@ function Sidenav({ color }) {
     </svg>,
   ];
 
-  const items = [
-    {
-      key: "dashboard",
-      label: (
-        <Link href="/">
-          <span
-            className="icon"
-            style={{
-              background: page === "" ? color : "",
-            }}
-          >
-            {dashboard}
-          </span>
-          <span className="label">Tổng quan</span>
-        </Link>
-      ),
-    },
-    {
-      key: "history",
-      label: (
-        <Link href="/history">
-          <span
-            className="icon"
-            style={{
-              background: page === "history" ? color : "",
-            }}
-          >
-            {billing}
-          </span>
-          <span className="label">Lịch sử</span>
-        </Link>
-      ),
-    },
-    {
-      key: "news",
-      label: (
-        <Link href="/news">
-          <span
-            className="icon"
-            style={{
-              background: page === "news" ? color : "",
-            }}
-          >
-            {tables}
-          </span>
-          <span className="label">Tin tức</span>
-        </Link>
-      ),
-    },
-    // {
-    //   key: "billing",
-    //   label: (
-    //     <Link href="/billing">
-    //       <span
-    //         className="icon"
-    //         style={{
-    //           background: page === "billing" ? color : "",
-    //         }}
-    //       >
-    //         {billing}
-    //       </span>
-    //       <span className="label">Tin tức</span>
-    //     </Link>
-    //   ),
-    // },
-    {
-      key: "Tài khoản",
-      label: (
-        <p className="menu-item-header font-bold text-gray-500 mt-4">
-          Tài khoản
-        </p>
-      ),
-    },
-    {
-      key: "profile",
-      label: (
-        <Link href="/profile">
-          <span
-            className="icon"
-            style={{
-              background: page === "profile" ? color : "",
-            }}
-          >
-            {profile}
-          </span>
-          <span className="label">Cá nhân</span>
-        </Link>
-      ),
-    },
-  ];
+  const items = React.useMemo(
+    () => [
+      {
+        key: "dashboard",
+        label: (
+          <Link href="/">
+            <span
+              className="icon"
+              style={{
+                background: page === "" ? color : "",
+              }}
+            >
+              {dashboard}
+            </span>
+            <span className="label">Tổng quan</span>
+          </Link>
+        ),
+      },
+      {
+        key: "history",
+        label: (
+          <Link href="/history">
+            <span
+              className="icon"
+              style={{
+                background: page === "history" ? color : "",
+              }}
+            >
+              {billing}
+            </span>
+            <span className="label">Lịch sử</span>
+          </Link>
+        ),
+      },
+      {
+        key: "news",
+        label: (
+          <Link href="/news">
+            <span
+              className="icon"
+              style={{
+                background: page === "news" ? color : "",
+              }}
+            >
+              {tables}
+            </span>
+            <span className="label">Tin tức</span>
+          </Link>
+        ),
+      },
+      {
+        key: "Tài khoản",
+        label: (
+          <p className="menu-item-header font-bold text-gray-500 mt-4">
+            Tài khoản
+          </p>
+        ),
+      },
+      {
+        key: "profile",
+        label: (
+          <Link href="/profile">
+            <span
+              className="icon"
+              style={{
+                background: page === "profile" ? color : "",
+              }}
+            >
+              {profile}
+            </span>
+            <span className="label">Cá nhân</span>
+          </Link>
+        ),
+      },
+    ],
+    [page, color]
+  );
 
   return (
-    <Space direction="vertical">
+    <Space direction="vertical" className="w-full">
       <Space>
         <Image src={logo} width={50} alt="" />
         <span>Nera</span>
       </Space>
       <Divider />
-      <Menu theme="light" mode="inline" items={items}></Menu>
+      <Flex vertical className="h-full">
+        <Menu
+          className="flex-1"
+          theme="light"
+          mode="inline"
+          items={items}
+        ></Menu>
+        <Divider />
+        <Button
+          style={{
+            marginTop: 60,
+          }}
+          type="primary"
+          icon={<DownloadOutlined />}
+          size={"middle"}
+        >
+          Tải app Android
+        </Button>
+        {/* <Button type="primary" icon={<DownloadOutlined />} size={"middle"}>
+        Tải app Android
+      </Button> */}
+      </Flex>
     </Space>
   );
 }

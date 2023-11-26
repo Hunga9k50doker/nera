@@ -1,17 +1,18 @@
 import React from "react";
 import Main from "@/components/layout/Main";
-// import "@/assets/styles/main.css";
 
 interface LayoutProps {
   children: React.ReactNode;
   auth: React.ReactNode;
+  notification: React.ReactNode;
 }
 
-const Layout = ({ children, auth }: LayoutProps) => {
+const Layout = ({ children, notification, auth }: LayoutProps) => {
   return (
     <Main>
-      {children}
       {auth}
+      {/* {notification} */}
+      {children}
     </Main>
   );
 };

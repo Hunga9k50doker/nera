@@ -5,10 +5,8 @@ import { useModalContext } from "@/context/ModalContext";
 const ModalConfirm = ({
   title,
   modalId,
-  children,
-  type = "primary",
   callBack,
-  okText,
+  children,
   confirmLoading,
 }) => {
   const { hideModal, modalState } = useModalContext();
@@ -16,10 +14,9 @@ const ModalConfirm = ({
     <Modal
       centered
       title={title}
-      confirmLoading={confirmLoading}
+      confirmLoading={confirmLoading || false}
       open={modalState?.[modalId] || false}
       onCancel={() => hideModal(modalId)}
-      okText={okText}
       onOk={callBack}
     >
       {children}

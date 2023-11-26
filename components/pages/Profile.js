@@ -24,18 +24,22 @@ import { formatDefault, numberWithCommas } from "@/utils";
 import { toast } from "react-toastify";
 import { useModalContext } from "@/context/ModalContext";
 import ModalConfirm from "@/components/modal/ModalConfirm";
-import { loginAction, logoutAction, updatePasswordAcction } from "@/actions";
-
+import ModalInfo from "@/components/modal/ModalInfo";
+import { logoutAction, updatePasswordAcction } from "@/actions";
+import Privacy from "@/components/Privacy";
 function Profile({ bankAccount }) {
   const { Text } = Typography;
   const modalId = "modal-confirm";
   const modalIdLogout = "modal-logout";
+  const modalIdPrivacy = "modal-privacy";
+
   const { user } = React.useContext(MainContext);
   const [bankData, setBankData] = React.useState();
   const [confirmLoading, setConfirmLoading] = React.useState(false);
   const { showModal, hideModal } = useModalContext();
   const btnSubmitRef = React.useRef();
   const [form] = Form.useForm();
+
   React.useEffect(() => {
     if (bankAccount.status < 300) {
       return setBankData(bankAccount.data);
@@ -54,13 +58,6 @@ function Profile({ bankAccount }) {
     toast(data?.message, {
       type: data?.type,
     });
-    if (data.status < 300) {
-      setTimeout(() => {
-        deleteCookie("access_token");
-        deleteCookie("refresh_token");
-        window.location.replace("/sign-in");
-      }, 1000);
-    }
   };
 
   const onFinish = React.useCallback(
@@ -85,9 +82,11 @@ function Profile({ bankAccount }) {
     [hideModal, modalId, form]
   );
 
-  const onFinishFailed = (errorInfo) => {
-    console.log("Failed:", errorInfo);
-  };
+  const onFinishFailed = (errorInfo) => {};
+
+  const handleCall = React.useCallback(() => {
+    window.open(`tel:${user.pool.hotline}`);
+  }, [user]);
 
   return (
     <>
@@ -177,7 +176,10 @@ function Profile({ bankAccount }) {
                 </Button>
               </List.Item>
               <List.Item>
-                <Button className="flex items-center w-full">
+                <Button
+                  onClick={() => showModal(modalIdPrivacy)}
+                  className="flex items-center w-full"
+                >
                   <Space>
                     <SafetyCertificateOutlined />
                     Quy đinh chính sách
@@ -185,7 +187,10 @@ function Profile({ bankAccount }) {
                 </Button>
               </List.Item>
               <List.Item>
-                <Button className="flex items-center w-full">
+                <Button
+                  onClick={handleCall}
+                  className="flex items-center w-full"
+                >
                   <Space>
                     <WhatsAppOutlined />
                     Hotline: {user.pool.hotline}
@@ -281,7 +286,7 @@ function Profile({ bankAccount }) {
           </Form>
         </ModalConfirm>
         <ModalConfirm
-          // confirmLoading={confirmLoading}
+          confirmLoading={confirmLoading}
           modalId={modalIdLogout}
           title={"Đăng xuất"}
           okText="Xác nhận"
@@ -292,6 +297,9 @@ function Profile({ bankAccount }) {
             Xác nhận đăng xuất!
           </Text>
         </ModalConfirm>
+        <ModalInfo modalId={modalIdPrivacy} title={"Quy đinh chính sách"}>
+          <Privacy />
+        </ModalInfo>
       </Row>
     </>
   );

@@ -12,6 +12,7 @@ const Login = () => {
     toast(res?.message, {
       type: res?.type || "success",
     });
+    window.location.reload("/");
   };
 
   const onFinishFailed = (errorInfo) => {};

@@ -120,6 +120,7 @@ function Home({ profits }) {
         : [],
     [profits]
   );
+
   const columns = [
     {
       title: "Thời gian",

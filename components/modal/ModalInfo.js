@@ -1,7 +1,20 @@
 import React from "react";
+import { Modal } from "antd";
+import { useModalContext } from "@/context/ModalContext";
 
-const ModalInfo = () => {
-  return <div>ModalInfo</div>;
+const ModalInfo = ({ title, modalId, children }) => {
+  const { hideModal, modalState } = useModalContext();
+  return (
+    <Modal
+      centered
+      title={title}
+      open={modalState?.[modalId] || false}
+      onCancel={() => hideModal(modalId)}
+      footer={<></>}
+    >
+      {children}
+    </Modal>
+  );
 };
 
-export default ModalInfo;
+export default React.memo(ModalInfo);

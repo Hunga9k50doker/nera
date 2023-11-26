@@ -6,8 +6,8 @@ import MainProvider from "@/context/MainContext";
 import { ModalProvider } from "@/context/ModalContext";
 const inter = Inter({ subsets: ["latin"] });
 import "@/assets/styles/global.css";
-import "@/assets/styles/responsive.css";
 import "@/assets/styles/main.css";
+import "@/assets/styles/responsive.css";
 
 export const metadata: Metadata = {
   title: "Nera",

@@ -1,14 +1,34 @@
 "use client";
-import { Row, Col, Card, List } from "antd";
+import { Row, Col, Card, List, Pagination } from "antd";
 import React from "react";
 import dayjs from "dayjs";
 import ReactHtmlParser from "react-html-parser";
-import { getNewDetailAction } from "@/actions";
+import { getNewDetailAction, getNewsAction } from "@/actions";
 import { toast } from "react-toastify";
 function News({ data: news, intialNew }) {
   const [pageData, setPageData] = React.useState(news?.data);
   const [newDetail, setNewDetail] = React.useState(intialNew?.data);
-  const [itemSelected, setItemSelected] = React.useState();
+  const [itemSelected, setItemSelected] = React.useState(intialNew?.data);
+
+  const getNews = React.useCallback(
+    async (page) => {
+      const data = await getNewsAction({
+        page: page,
+      });
+      if (data.status < 300) {
+        return setPageData(data.data);
+      } else {
+        return toast(data?.message, {
+          type: data?.type,
+        });
+      }
+    },
+    [pageData]
+  );
+
+  const onChange = React.useCallback((e) => {
+    getNews(e);
+  }, []);
 
   const getNewDetail = React.useCallback(async () => {
     const data = await getNewDetailAction(itemSelected?.id);
@@ -23,7 +43,7 @@ function News({ data: news, intialNew }) {
 
   React.useEffect(() => {
     if (itemSelected) getNewDetail();
-  }, [getNewDetail, itemSelected]);
+  }, [itemSelected]);
 
   return (
     <>
@@ -55,7 +75,7 @@ function News({ data: news, intialNew }) {
         <Col span={24} md={8} className="mb-24">
           <Card
             bordered={false}
-            bodyStyle={{ paddingTop: 0 }}
+            bodyStyle={{ padding: 0 }}
             className="header-solid h-full  ant-list-yes"
             title={<h6 className="font-semibold m-0">Tin tức mới nhất </h6>}
           >
@@ -68,6 +88,13 @@ function News({ data: news, intialNew }) {
                   <List.Item
                     className="cursor-pointer"
                     onClick={() => setItemSelected(item)}
+                    style={{
+                      padding: "8px 16px",
+                      borderLeft:
+                        itemSelected && item?.id === itemSelected?.id
+                          ? "4px solid #52c41a"
+                          : "none",
+                    }}
                   >
                     <List.Item.Meta
                       title={item.title}
@@ -83,6 +110,17 @@ function News({ data: news, intialNew }) {
               />
             )}
           </Card>
+          {pageData?.total_page > 1 && (
+            <Pagination
+              style={{
+                padding: 16,
+              }}
+              defaultCurrent={1}
+              total={pageData?.total_records}
+              showSizeChanger={false}
+              onChange={onChange}
+            />
+          )}
         </Col>
       </Row>
     </>
