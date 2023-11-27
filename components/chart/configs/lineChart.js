@@ -1,17 +1,7 @@
-const lineChart = {
-  series: [
-    {
-      name: "Lợi nhuận Pool",
-      data: [350, 40, 300, 220, 500, 250, 400, 290, 340, 230, 500],
-      offsetY: 0,
-    },
-    {
-      name: "Lợi nhuận cá nhân",
-      data: [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 340, 0, 0, 0],
-      offsetY: 0,
-    },
-  ],
+import { numberWithCommas } from "@/utils";
 
+const lineChart = {
+  series: [],
   options: {
     chart: {
       width: "100%",
@@ -23,7 +13,11 @@ const lineChart = {
     },
 
     legend: {
-      show: false,
+      position: "top",
+      // horizontalAlign: "right",
+      // floating: true,
+      // offsetY: -25,
+      // offsetX: -5,
     },
 
     dataLabels: {
@@ -60,6 +54,7 @@ const lineChart = {
             "#8c8c8c",
             "#8c8c8c",
             "#8c8c8c",
+            "#8c8c8c",
           ],
         },
       },
@@ -82,7 +77,7 @@ const lineChart = {
     tooltip: {
       y: {
         formatter: function (val) {
-          return val;
+          return numberWithCommas(val) + " VND";
         },
       },
     },

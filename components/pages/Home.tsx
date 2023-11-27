@@ -164,7 +164,7 @@ function Home({ profits = null }: any) {
         </Col>
         <Col xs={24} sm={24} md={12} lg={12} xl={14} className="mb-24">
           <Card bordered={false} className="criclebox h-full">
-            <LineChart />
+            <LineChart data={dataChart} />
           </Card>
         </Col>
       </Row>

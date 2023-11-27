@@ -1,5 +1,5 @@
 "use client";
-import React, { useState, useEffect } from "react";
+import React, { useEffect } from "react";
 import {
   Row,
   Col,
@@ -7,14 +7,11 @@ import {
   Badge,
   Dropdown,
   Button,
-  Drawer,
   Typography,
   Divider,
-  Space,
   theme,
   Flex,
 } from "antd";
-import styled from "styled-components";
 import Link from "next/link";
 import { MainContext } from "@/context/MainContext";
 import { getFromNowShort } from "@/utils";
@@ -26,6 +23,11 @@ function Header({ name, subName, onPress }: any) {
   const { token } = useToken();
   const { Text } = Typography;
   const { notification } = React.useContext(MainContext);
+
+  const onRedirect = (item: any) => {
+    router.push(`/notification/?id=${item.id}`);
+  };
+
   const items = React.useMemo(
     () =>
       notification?.data
@@ -36,11 +38,7 @@ function Header({ name, subName, onPress }: any) {
                   style={{ minWidth: 300 }}
                   vertical
                   justify="space-between"
-                  // gap={24}
-                  onClick={() => {
-                    router.push(`/notification/?id=${item.id}`);
-                    router.refresh();
-                  }}
+                  onClick={() => onRedirect(item)}
                 >
                   <Text strong>{item.title}</Text>
                   <Text>{getFromNowShort(item.created_at)}</Text>
@@ -123,8 +121,8 @@ function Header({ name, subName, onPress }: any) {
                   >
                     <Button
                       className="w-full"
-                      onClick={() => router.push(`/notification`)}
                       type="primary"
+                      onClick={() => router.push("/notification")}
                     >
                       Xem thêm
                     </Button>

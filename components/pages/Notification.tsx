@@ -6,7 +6,7 @@ import dayjs from "dayjs";
 import ReactHtmlParser from "react-html-parser";
 import { getNotificationDetailAction, getNotificationAction } from "@/actions";
 import { toast } from "react-toastify";
-import { useRouter } from "next/navigation";
+import { useRouter, useSearchParams } from "next/navigation";
 
 const Notification = ({
   data = null,
@@ -15,9 +15,12 @@ const Notification = ({
 }: any) => {
   const { updateNotification } = React.useContext(MainContext);
   const router = useRouter();
+  const searchParams = useSearchParams();
   const [pageData, setPageData] = React.useState(data?.data);
   const [newDetail, setNewDetail] = React.useState(intialNew?.data);
-  const [itemSelected, setItemSelected] = React.useState(intialNew?.data);
+  const [itemSelected, setItemSelected] = React.useState(
+    intialNew?.data || null
+  );
 
   const getNotification = React.useCallback(
     async (page: number) => {
@@ -57,6 +60,11 @@ const Notification = ({
   React.useEffect(() => {
     if (data?.data) updateNotification(data.data);
   }, [data]);
+
+  React.useEffect(() => {
+    const id = searchParams.get("id");
+    if (id && itemSelected && +id !== +itemSelected?.id) router.refresh();
+  }, [searchParams]);
 
   if (shortView) {
     return null;

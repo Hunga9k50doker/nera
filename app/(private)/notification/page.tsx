@@ -14,7 +14,6 @@ const Page = async ({
 }) => {
   let newDetail;
   const { id } = searchParams;
-
   const notification = await getNotifications()
     .then((res) => res)
     .catch((err) => err);
