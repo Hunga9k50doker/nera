@@ -143,7 +143,12 @@ function Profile({ bankAccount = null }: any) {
                         </Card>
                       </Col>
                     ))}
+                  {!bankData && <Text>Chưa có thông tin!</Text>}
                 </Row>
+                <Text>
+                  (*)Để cập nhật và thay đổi tài khoản ngân hàng, vui lòng liên
+                  hệ trực tiếp với chúng tôi!
+                </Text>
               </Card>
             </Col>
           </Row>

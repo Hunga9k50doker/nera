@@ -6,7 +6,7 @@ const Page = async () => {
   const bankAccount = await getBankAccount()
     .then((r) => r)
     .catch((err) => err);
-  if (!bankAccount?.data) return notFound();
+  if (!bankAccount) return notFound();
   return <Profile bankAccount={bankAccount} />;
 };
 
