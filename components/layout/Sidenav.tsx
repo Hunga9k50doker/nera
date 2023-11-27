@@ -147,6 +147,7 @@ function Sidenav({ color = "#1890ff" }: any) {
       },
       {
         key: "Tài khoản",
+        disabled: true,
         label: (
           <p className="menu-item-header font-bold text-gray-500 mt-4">
             Tài khoản
