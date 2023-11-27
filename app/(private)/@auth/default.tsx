@@ -10,8 +10,7 @@ export default async function Default() {
     .then((res) => res)
     .catch((err) => err);
   if (userData?.status === 401) {
-    clearCookieAction();
-    redirect("/sign-in");
+    redirect("/error/401");
   }
   const notification = await getNotifications()
     .then((res) => res)

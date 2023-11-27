@@ -4,6 +4,7 @@ import {
   getNotificationDetail,
   getNotifications,
 } from "@/apis/notification.api";
+import { redirect } from "next/navigation";
 
 const Page = async ({
   searchParams,
@@ -17,6 +18,9 @@ const Page = async ({
   const notification = await getNotifications()
     .then((res) => res)
     .catch((err) => err);
+  if (notification?.status === 401) {
+    redirect("/error/401");
+  }
   if (notification.status === 200) {
     newDetail = await getNotificationDetail(id || notification.data.data[0].id)
       .then((r) => r)

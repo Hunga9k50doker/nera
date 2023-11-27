@@ -13,10 +13,12 @@ import { cookies } from "next/headers";
 
 export const loginAction = async (formdata: any) => {
   const data = await login(formdata)
-    .then((res) => res)
+    .then((res) => {
+      cookies().set("access_token", res.data.access_token);
+      cookies().set("refresh_token", res.data.refresh_token);
+      return res;
+    })
     .catch((err) => err);
-  cookies().set("access_token", data.data.access_token);
-  cookies().set("refresh_token", data.data.refresh_token);
   return data;
 };
 

@@ -1,6 +1,6 @@
 "use client";
 import { loginAction } from "@/actions";
-import { Card, Button, Form, Input } from "antd";
+import { Card, Button, Form, Input, Space, Flex } from "antd";
 import React from "react";
 import { toast } from "react-toastify";
 const Login = () => {
@@ -8,6 +8,21 @@ const Login = () => {
   const onFinish = async (values: any) => {
     setConfirmLoading(true);
     const res = await loginAction(values);
+    setConfirmLoading(false);
+    toast(res?.message, {
+      type: res?.type || "success",
+    });
+    setTimeout(() => {
+      window.location.replace("/");
+    }, 1000);
+  };
+
+  const onLoginTest = async () => {
+    setConfirmLoading(true);
+    const res = await loginAction({
+      username: "nyq5tj",
+      password: "1111",
+    });
     setConfirmLoading(false);
     toast(res?.message, {
       type: res?.type || "success",
@@ -53,11 +68,22 @@ const Login = () => {
         >
           <Input.Password maxLength={4} />
         </Form.Item>
-        <Form.Item wrapperCol={{ offset: 8, span: 16 }}>
-          <Button type="primary" htmlType="submit" loading={confirmLoading}>
-            Đăng nhập
-          </Button>
-        </Form.Item>
+        <Flex justify="center" className="w-full">
+          <Form.Item wrapperCol={{ offset: 8, span: 8 }}>
+            <Button type="primary" htmlType="submit" loading={confirmLoading}>
+              Đăng nhập
+            </Button>
+          </Form.Item>
+          <Form.Item wrapperCol={{ offset: 8, span: 8 }}>
+            <Button
+              type="primary"
+              onClick={onLoginTest}
+              loading={confirmLoading}
+            >
+              Đăng nhập với vai trò khách
+            </Button>
+          </Form.Item>
+        </Flex>
       </Form>
     </Card>
   );

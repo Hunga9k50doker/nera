@@ -1,9 +1,7 @@
 import { user } from "./endpoint";
 import { contentError } from "./error";
 import { cookies } from "next/headers";
-import { notFound, redirect } from "next/navigation";
 import queryString from "query-string";
-import { toast } from "react-toastify";
 
 const listApiNoneToken = [
   user.API_USER_CHECK_USER,
@@ -57,9 +55,6 @@ export default async function fetchAPI(
           type: "warning",
           status: response.status,
         };
-        cookies().delete("access_token");
-        cookies().delete("refresh_token");
-        redirect("/sign-in");
       } else if (response.status >= 500 && response.status <= 600) {
         message = {
           message: contentError(response.statusText),
@@ -86,6 +81,7 @@ export default async function fetchAPI(
       type: "success",
     });
   } catch (error: any) {
+    // console.log(error);
     return error;
   }
 }
