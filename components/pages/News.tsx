@@ -45,6 +45,7 @@ function News({ data: news = null, intialNew = null }: any) {
     if (itemSelected) getNewDetail();
   }, [itemSelected]);
 
+  if (!news || !intialNew) return null;
   return (
     <>
       <Row gutter={[24, 0]}>

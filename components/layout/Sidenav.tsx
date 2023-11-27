@@ -1,4 +1,4 @@
-import { Menu, Divider, Space, Avatar, Button, Flex } from "antd";
+import { Menu, Divider, Space, Avatar, Button, Flex, Typography } from "antd";
 import Link from "next/link";
 import logo from "../../assets/images/logo.png";
 import Image from "next/image";
@@ -6,9 +6,9 @@ import { usePathname } from "next/navigation";
 import React from "react";
 import { DownloadOutlined } from "@ant-design/icons";
 
-function Sidenav({ color }: any) {
+function Sidenav({ color = "#1890ff" }: any) {
   const pathname = usePathname();
-  const page = pathname.replace("/", "");
+  const page = pathname.replaceAll("/", "");
 
   const dashboard = [
     <svg
@@ -101,14 +101,14 @@ function Sidenav({ color }: any) {
         key: "dashboard",
         label: (
           <Link href="/">
-            <span
+            <Typography
               className="icon"
               style={{
                 background: page === "" ? color : "",
               }}
             >
               {dashboard}
-            </span>
+            </Typography>
             <span className="label">Tổng quan</span>
           </Link>
         ),
@@ -117,14 +117,14 @@ function Sidenav({ color }: any) {
         key: "history",
         label: (
           <Link href="/history">
-            <span
+            <Typography
               className="icon"
               style={{
                 background: page === "history" ? color : "",
               }}
             >
               {billing}
-            </span>
+            </Typography>
             <span className="label">Lịch sử</span>
           </Link>
         ),
@@ -133,14 +133,14 @@ function Sidenav({ color }: any) {
         key: "news",
         label: (
           <Link href="/news">
-            <span
+            <Typography
               className="icon"
               style={{
                 background: page === "news" ? color : "",
               }}
             >
               {tables}
-            </span>
+            </Typography>
             <span className="label">Tin tức</span>
           </Link>
         ),
@@ -157,14 +157,14 @@ function Sidenav({ color }: any) {
         key: "profile",
         label: (
           <Link href="/profile">
-            <span
+            <Typography
               className="icon"
               style={{
                 background: page === "profile" ? color : "",
               }}
             >
               {profile}
-            </span>
+            </Typography>
             <span className="label">Cá nhân</span>
           </Link>
         ),

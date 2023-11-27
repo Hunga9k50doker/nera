@@ -5,7 +5,6 @@ const Page = async () => {
   const profits = await getProfits()
     .then((r) => r.data)
     .catch((err) => err);
-  console.log(profits);
   return <Home profits={profits} />;
 };
 

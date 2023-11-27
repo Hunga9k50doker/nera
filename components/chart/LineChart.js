@@ -3,6 +3,7 @@ import ReactApexChart from "react-apexcharts";
 import { Typography } from "antd";
 import { MinusOutlined } from "@ant-design/icons";
 import lineChart from "./configs/lineChart";
+import React from "react";
 import dayjs from "dayjs";
 function LineChart() {
   const { Title, Paragraph } = Typography;
@@ -13,17 +14,13 @@ function LineChart() {
         <div>
           <Title level={5}>Thống kê</Title>
           <Paragraph className="lastweek">
-            Dữ liệu được tính qua các năm
+            Dữ liệu được chỉ tính trong năm {new Date().getFullYear()}
           </Paragraph>
         </div>
         <div className="sales">
           <ul>
-            <li>
-              {<MinusOutlined />} {new Date().getFullYear()}
-            </li>
-            <li>
-              {<MinusOutlined />} {new Date().getFullYear() - 1}
-            </li>
+            <li>{<MinusOutlined />} Lợi nhuận Pool</li>
+            <li>{<MinusOutlined />} Lợi nhuận cá nhân</li>
           </ul>
         </div>
       </div>
@@ -40,4 +37,4 @@ function LineChart() {
   );
 }
 
-export default LineChart;
+export default React.memo(LineChart);

@@ -6,7 +6,7 @@ import eChart from "./configs/eChart";
 import dayjs from "dayjs";
 import { MainContext } from "@/context/MainContext";
 import { formatDefault, numberWithCommas } from "@/utils";
-function EChart() {
+function EChart({ data }) {
   const { Title, Paragraph } = Typography;
   const { user } = React.useContext(MainContext);
   const items = React.useMemo(
@@ -26,28 +26,57 @@ function EChart() {
     ],
     [user]
   );
+  console.log(data);
+  const dataSeries = React.useMemo(() => {
+    const res = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12].map((item) => {
+      const exits = data.find(
+        (e) => new Date(e.created_at).getMonth() - 1 === item
+      );
+      return exits ? exits.user_profit_deal : 0;
+    });
+    return res;
+  });
+
+  const series = React.useMemo(
+    () => [
+      {
+        name: "Lợi nhuận",
+        data: dataSeries,
+        color: "#fff",
+      },
+    ],
+    [dataSeries]
+  );
 
   return (
     <>
       <div id="chart">
         <ReactApexChart
           className="bar-chart"
-          options={eChart.options}
-          series={eChart.series}
+          options={{
+            ...eChart.options,
+            series,
+          }}
+          series={series}
           type="bar"
           height={220}
         />
       </div>
       <div className="chart-vistior">
-        <Title level={5}>Lợi nhuận </Title>
-        <Paragraph className="lastweek">
+        <Title level={5}>
+          Lợi nhuận của bạn trong năm {new Date().getFullYear()}{" "}
+        </Title>
+        {/* <Paragraph className="lastweek">
           Tháng {dayjs(new Date()).format("MM/YYYY")}{" "}
           <span className="bnb2">
-            +{formatDefault(user.user.ticket_percent * 100)}%
+            ~{formatDefault(user.user.ticket_percent * 100)}%
           </span>
-        </Paragraph>
+        </Paragraph> */}
         <Paragraph className="lastweek">
-          Dữ liệu chỉ được tính trong tháng hiện tại
+          Thống kê lợi nhuận tháng {dayjs(new Date()).format("MM/YYYY")}{" "}
+          <span className="bnb2">
+            ~{formatDefault(user.user.ticket_percent * 100)}%
+          </span>
         </Paragraph>
         <Row gutter justify={"space-between"}>
           {items.map((v, index) => (
@@ -64,4 +93,4 @@ function EChart() {
   );
 }
 
-export default EChart;
+export default React.memo(EChart);

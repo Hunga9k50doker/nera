@@ -7,6 +7,7 @@ import Link from "next/link";
 import { MainContext } from "@/context/MainContext";
 import { numberWithCommas, formatDefault } from "@/utils";
 import dayjs from "dayjs";
+import { groupBy } from "lodash";
 
 const Echart = dynamic(() => import("@/components/chart/EChart"), {
   ssr: false,
@@ -111,6 +112,16 @@ function Home({ profits = null }: any) {
     [profits]
   );
 
+  const dataChart = React.useMemo(() => {
+    if (profits?.data) {
+      const groupData = groupBy(profits?.data, ({ created_at }) =>
+        new Date(created_at).getFullYear()
+      );
+      return groupData?.[new Date().getFullYear()];
+    }
+    return [];
+  }, [profits]);
+
   if (!profits) return null;
   return (
     <div>
@@ -148,7 +159,7 @@ function Home({ profits = null }: any) {
       <Row gutter={[24, 0]}>
         <Col xs={24} sm={24} md={12} lg={12} xl={10} className="mb-24">
           <Card bordered={false} className="criclebox h-full">
-            <Echart />
+            <Echart data={dataChart} />
           </Card>
         </Col>
         <Col xs={24} sm={24} md={12} lg={12} xl={14} className="mb-24">

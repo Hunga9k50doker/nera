@@ -16,7 +16,7 @@ function Main({ children }: any) {
 
   const openDrawer = () => setVisible(!visible);
   const handleSidenavType = (type: any) => setSidenavType(type);
-  const handleSidenavColor = (color: any) => setSidenavColor(color);
+  // const handleSidenavColor = (color: any) => setSidenavColor(color);
   const handleFixedNavbar = (type: any) => setFixed(type);
 
   let pathname = usePathname();
@@ -84,7 +84,7 @@ function Main({ children }: any) {
                 onPress={openDrawer}
                 name={pathname}
                 subName={pathname}
-                handleSidenavColor={handleSidenavColor}
+                // handleSidenavColor={handleSidenavColor}
                 handleSidenavType={handleSidenavType}
                 handleFixedNavbar={handleFixedNavbar}
               />
@@ -96,7 +96,7 @@ function Main({ children }: any) {
               onPress={openDrawer}
               name={pathname}
               subName={pathname}
-              handleSidenavColor={handleSidenavColor}
+              // handleSidenavColor={handleSidenavColor}
               handleSidenavType={handleSidenavType}
               handleFixedNavbar={handleFixedNavbar}
             />

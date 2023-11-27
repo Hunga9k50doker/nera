@@ -20,14 +20,18 @@ export const loginAction = async (formdata: any) => {
   return data;
 };
 
+export const clearCookieAction = async () => {
+  cookies().delete("access_token");
+  cookies().delete("refresh_token");
+};
+
 export const logoutAction = async () => {
   const data = await logout({
     access_token: cookies().get("access_token")?.value,
     refresh_token: cookies().get("refresh_token")?.value,
   })
     .then((res) => {
-      cookies().delete("access_token");
-      cookies().delete("refresh_token");
+      clearCookieAction();
       return res;
     })
     .catch((err) => err);
