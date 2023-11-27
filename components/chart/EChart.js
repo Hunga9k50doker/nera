@@ -26,7 +26,6 @@ function EChart({ data }) {
     ],
     [user]
   );
-  console.log(data);
   const dataSeries = React.useMemo(() => {
     const res = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12].map((item) => {
       const exits = data.find(

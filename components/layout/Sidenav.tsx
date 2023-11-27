@@ -4,7 +4,7 @@ import logo from "../../assets/images/logo.png";
 import Image from "next/image";
 import { usePathname } from "next/navigation";
 import React from "react";
-import { DownloadOutlined } from "@ant-design/icons";
+import { AndroidOutlined, AppleOutlined } from "@ant-design/icons";
 
 function Sidenav({ color = "#1890ff" }: any) {
   const pathname = usePathname();
@@ -173,6 +173,15 @@ function Sidenav({ color = "#1890ff" }: any) {
     [page, color]
   );
 
+  const hasUrlAndroid = React.useMemo(
+    () => Boolean(process.env.URL_APP_ANDROID),
+    [process.env.URL_APP_ANDROID]
+  );
+  const hasUrlIos = React.useMemo(
+    () => Boolean(process.env.URL_APP_IOS),
+    [process.env.URL_APP_IOS]
+  );
+
   return (
     <Space direction="vertical" className="w-full">
       <Space>
@@ -180,27 +189,38 @@ function Sidenav({ color = "#1890ff" }: any) {
         <span>Nera</span>
       </Space>
       <Divider />
-      <Flex vertical className="h-full">
-        <Menu
-          className="flex-1"
-          theme="light"
-          mode="inline"
-          items={items}
-        ></Menu>
-        <Divider />
-        <Button
-          style={{
-            marginTop: 60,
-          }}
-          type="primary"
-          icon={<DownloadOutlined />}
-          size={"middle"}
-        >
-          Tải app Android
-        </Button>
-        {/* <Button type="primary" icon={<DownloadOutlined />} size={"middle"}>
-        Tải app Android
-      </Button> */}
+      <Menu className="flex-1" theme="light" mode="inline" items={items}></Menu>
+      <Divider />
+      <Flex
+        style={{
+          marginTop: 60,
+        }}
+        gap={8}
+        vertical
+        className="h-full"
+      >
+        {hasUrlAndroid && (
+          <Button
+            target="_blank"
+            href={process.env.URL_APP_ANDROID || "#"}
+            type="primary"
+            icon={<AndroidOutlined />}
+            size={"middle"}
+          >
+            Tải app Android
+          </Button>
+        )}
+        {hasUrlIos && (
+          <Button
+            target="_blank"
+            href={process.env.URL_APP_IOS || "#"}
+            type="primary"
+            icon={<AppleOutlined />}
+            size={"middle"}
+          >
+            Tải app IOS
+          </Button>
+        )}
       </Flex>
     </Space>
   );
