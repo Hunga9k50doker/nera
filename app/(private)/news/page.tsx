@@ -1,6 +1,7 @@
 import React from "react";
 import News from "@/components/pages/News";
 import { getNewDetail, getNews } from "@/apis/notification.api";
+import { notFound } from "next/navigation";
 const Page = async () => {
   let newDetail;
   const data = await getNews()
@@ -11,6 +12,7 @@ const Page = async () => {
       .then((r) => r)
       .catch((err) => err);
   }
+  if (!data?.data) return notFound();
   return <News data={data} intialNew={newDetail} />;
 };
 
