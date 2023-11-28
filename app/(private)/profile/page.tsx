@@ -9,7 +9,7 @@ const Page = async () => {
   if (bankAccount?.status === 401) {
     redirect("/error/401");
   }
-  if (!bankAccount) return notFound();
+  if (!bankAccount?.data) return notFound();
   return <Profile bankAccount={bankAccount} />;
 };
 
